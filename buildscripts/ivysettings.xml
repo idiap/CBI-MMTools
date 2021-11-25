@@ -1,0 +1,16 @@
+<ivysettings>
+	<settings defaultResolver="resolver-chain"/>
+
+	<resolvers>
+		<ibiblio name="central" m2compatible="true" root="https://repo1.maven.org/maven2"/>
+		
+		<filesystem name="thirdparty">
+			<artifact pattern="${ivy.settings.dir}/../compiled/thirdparty/[artifact].[ext]"/>
+		</filesystem>
+		
+		<chain name="resolver-chain" returnFirst="true">
+			<resolver ref="central"/>
+			<resolver ref="thirdparty"/>
+		</chain>
+	</resolvers>
+</ivysettings>

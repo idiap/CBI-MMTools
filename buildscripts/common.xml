@@ -1,0 +1,90 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="common" default="jar">
+
+  <property name="product" value="${ant.project.name}"/>
+  <property name="jarfilename" value="${product}.jar"/>
+  <property name="srcdir" value="src/"/>
+  <property name="intdir" location="build"/>
+  <property name="jarfile" value="${outdir}/${product}.jar"/>
+
+  <property name="ivy.install.version" value="2.3.0" />
+  <condition property="ivy.home" value="${env.IVY_HOME}">
+    <isset property="env.IVY_HOME" />
+  </condition>
+
+  <property name="ivy.home" value="${user.home}/.ant" />
+  <property name="ivy.jar.dir" value="${ivy.home}/lib" />
+  <property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar" />
+
+  <target name="download-ivy" unless="offline">
+
+    <mkdir dir="${ivy.jar.dir}"/>
+    <!-- download Ivy from web site so that it can be used even without any special installation -->
+    <get src="https://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar" 
+         dest="${ivy.jar.file}" usetimestamp="true"/>
+  </target>
+
+  <target name="init-ivy" depends="download-ivy">
+    <!-- try to load ivy here from ivy home, in case the user has not already dropped
+         it into ant's lib dir (note that the latter copy will always take precedence).
+         We will not fail as long as local lib dir exists (it may be empty) and
+         ivy is in at least one of ant's lib dir or the local lib dir. -->
+    <path id="ivy.lib.path">
+      <fileset dir="${ivy.jar.dir}" includes="*.jar"/>
+
+    </path>
+    <taskdef resource="org/apache/ivy/ant/antlib.xml"
+             uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
+  </target>
+
+  <target name="resolve" depends="init-ivy" description="--> retrieve dependencies with Ivy">
+    <property name="ivy.dep.file"
+	      location="../../buildscripts/ivy.xml"/>
+
+    <ivy:configure file="../../buildscripts/ivysettings.xml"/>
+    <ivy:retrieve/>
+    <ivy:cachepath pathid="ivy.classpath"/>
+  </target>
+
+  <path id="local.classpath">
+    <fileset dir="../../compiled/libraries">
+      <include name="*.jar" />
+    </fileset>
+  </path>
+
+
+  <path id="combined.classpath">
+    <path refid="ivy.classpath" />
+    <path refid="local.classpath" />
+  </path>
+
+  <target name="compile" depends="resolve" description="Compile Java sources">
+    <mkdir dir="${intdir}"/>
+
+    <javac debug="on" debuglevel="lines,vars,source"
+	   optimize="on" deprecation="on"
+	   source="1.8" target="1.8" includeAntRuntime="false"
+           srcdir="${srcdir}" destdir="${intdir}">
+      <compilerarg value="-Xlint:all,-path,-serial"/>
+      <classpath refid="combined.classpath"/>
+    </javac>
+  </target>
+  
+  <!-- Override this for custom deps building -->
+  <target name="makedeps"/>
+  <target name="jar" depends="makedeps,compile" description="Build Jar file">
+    <mkdir dir="${outdir}"/>
+    <sequential>
+      <property name="manifest" location="${intdir}/MANIFEST.MF"/>
+      <manifest file="${manifest}"/>
+      <jar basedir="${intdir}" destfile="${jarfile}"
+	   compress="true" index="true" indexMetaInf="true"
+	   manifest="${manifest}"/>
+    </sequential>
+  </target>
+
+  <target name="clean" description="Clean build outputs">
+    <ivy:cleancache />
+    <delete dir="${intdir}"/>
+    <delete file="${jarfile}"/>
+  </target>
+</project>

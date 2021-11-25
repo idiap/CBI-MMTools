@@ -1,0 +1,3 @@
+<project name="libraries">
+	<property name="outdir" location="../../compiled/libraries"/>
+</project>

@@ -1,0 +1,33 @@
+<project name="cbi_mm" default="jar">
+
+  <macrodef name="run-all">
+    <attribute name="target"/>
+    <attribute name="folder"/>
+    <sequential>
+      <subant target="@{target}">
+	<fileset dir=".">
+	  <include name="@{folder}/*/build.xml"/>
+	</fileset>
+      </subant>
+    </sequential>
+  </macrodef>
+
+  <target name="clean">
+    <run-all target="clean" folder="plugins"/>
+    <!-- <run-all target="clean" folder="libraries"/> -->
+  </target>
+  
+  <target name="plugins-jar">
+    <run-all target="jar" folder="plugins"/>
+  </target>
+
+  <target name="libraries-jar">
+    <run-all target="jar" folder="libraries"/>
+  </target>
+
+  <target name="jar">
+    <antcall target="libraries-jar"/>
+    <antcall target="plugins-jar"/>
+  </target>
+  
+</project>

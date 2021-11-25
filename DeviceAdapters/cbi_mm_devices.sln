@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29123.88
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ArdIllu", "ArdIllu\ArdIllu.vcxproj", "{45E89C73-2DA7-4820-AD08-411501476AB6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B8C95F39-54BF-40A9-807B-598DF2821D55} = {B8C95F39-54BF-40A9-807B-598DF2821D55}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MMDevice-SharedRuntime", "mmCoreAndDevices\MMDevice\MMDevice-SharedRuntime.vcxproj", "{B8C95F39-54BF-40A9-807B-598DF2821D55}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ArduControl", "ArduControl\ArduControl.vcxproj", "{64C5BF90-E918-4120-8920-89CEBFFEB87F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{45E89C73-2DA7-4820-AD08-411501476AB6}.Debug|x64.ActiveCfg = Debug|x64
+		{45E89C73-2DA7-4820-AD08-411501476AB6}.Debug|x64.Build.0 = Debug|x64
+		{45E89C73-2DA7-4820-AD08-411501476AB6}.Debug|x86.ActiveCfg = Debug|Win32
+		{45E89C73-2DA7-4820-AD08-411501476AB6}.Debug|x86.Build.0 = Debug|Win32
+		{45E89C73-2DA7-4820-AD08-411501476AB6}.Release|x64.ActiveCfg = Release|x64
+		{45E89C73-2DA7-4820-AD08-411501476AB6}.Release|x64.Build.0 = Release|x64
+		{45E89C73-2DA7-4820-AD08-411501476AB6}.Release|x86.ActiveCfg = Release|Win32
+		{45E89C73-2DA7-4820-AD08-411501476AB6}.Release|x86.Build.0 = Release|Win32
+		{B8C95F39-54BF-40A9-807B-598DF2821D55}.Debug|x64.ActiveCfg = Debug|x64
+		{B8C95F39-54BF-40A9-807B-598DF2821D55}.Debug|x64.Build.0 = Debug|x64
+		{B8C95F39-54BF-40A9-807B-598DF2821D55}.Debug|x86.ActiveCfg = Debug|Win32
+		{B8C95F39-54BF-40A9-807B-598DF2821D55}.Debug|x86.Build.0 = Debug|Win32
+		{B8C95F39-54BF-40A9-807B-598DF2821D55}.Release|x64.ActiveCfg = Release|x64
+		{B8C95F39-54BF-40A9-807B-598DF2821D55}.Release|x64.Build.0 = Release|x64
+		{B8C95F39-54BF-40A9-807B-598DF2821D55}.Release|x86.ActiveCfg = Release|Win32
+		{B8C95F39-54BF-40A9-807B-598DF2821D55}.Release|x86.Build.0 = Release|Win32
+		{64C5BF90-E918-4120-8920-89CEBFFEB87F}.Debug|x64.ActiveCfg = Debug|x64
+		{64C5BF90-E918-4120-8920-89CEBFFEB87F}.Debug|x64.Build.0 = Debug|x64
+		{64C5BF90-E918-4120-8920-89CEBFFEB87F}.Debug|x86.ActiveCfg = Debug|Win32
+		{64C5BF90-E918-4120-8920-89CEBFFEB87F}.Debug|x86.Build.0 = Debug|Win32
+		{64C5BF90-E918-4120-8920-89CEBFFEB87F}.Release|x64.ActiveCfg = Release|x64
+		{64C5BF90-E918-4120-8920-89CEBFFEB87F}.Release|x64.Build.0 = Release|x64
+		{64C5BF90-E918-4120-8920-89CEBFFEB87F}.Release|x86.ActiveCfg = Release|Win32
+		{64C5BF90-E918-4120-8920-89CEBFFEB87F}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9850EB7F-C907-4A80-AECA-540A2545A4EA}
+	EndGlobalSection
+EndGlobal

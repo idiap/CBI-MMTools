@@ -1,0 +1,7 @@
+<project name="OpticalRotation" default="jar">
+    
+    <include file="../../buildscripts/libraries.xml"/>
+    <import file="../../buildscripts/common.xml"/>
+
+</project>
+

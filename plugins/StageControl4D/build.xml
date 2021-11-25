@@ -1,0 +1,7 @@
+<project name="StageControl4D" default="jar">
+    
+    <include file="../../buildscripts/plugins.xml"/>
+    <import file="../../buildscripts/common.xml"/>
+
+</project>
+
