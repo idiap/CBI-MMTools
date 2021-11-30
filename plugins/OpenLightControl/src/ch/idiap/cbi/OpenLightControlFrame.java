@@ -124,8 +124,8 @@ public final class OpenLightControlFrame extends JFrame {
     private DefaultXYDataset digDataset;
     private DefaultXYDataset anaDataset;
 
-    final private String[] deviceNames = { "ArduControl-Hub", "ArduControl-TriggerSelect", "ArduControl-Enable",
-            "ArduControl-OutputP1", "ArduControl-OutputP2", "ArduControl-OutputO1", "ArduControl-OutputO2" };
+    final private String[] deviceNames = { "OpenLightControl-Hub", "OpenLightControl-TriggerSelect", "OpenLightControl-Enable",
+            "OpenLightControl-OutputP1", "OpenLightControl-OutputP2", "OpenLightControl-OutputO1", "OpenLightControl-OutputO2" };
 
     final private String[] channelNames = { "Output P1 (PWM)", "Output P2 (PWM)", "Output 1", "Output 2" };
 

@@ -78,7 +78,7 @@ public class OpenLightControl implements SciJavaPlugin, MenuPlugin {
 
     @Override
     public String getHelpText() {
-        return "GUI for the ArduControl modulation device.";
+        return "GUI for the OpenLightControl modulation device.";
     }
 
     @Override

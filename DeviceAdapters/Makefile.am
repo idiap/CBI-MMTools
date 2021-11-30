@@ -5,4 +5,4 @@ ACLOCAL_AMFLAGS = -I ./mmCoreAndDevices/m4
 SUBDIRS = \
     mmCoreAndDevices/MMDevice \
 	ArdIllu \
-    ArduControl
+    OpenLightControl

@@ -17,7 +17,7 @@ This repository contains plugins, device adapters and libraries for the operatio
 * __DeviceAdapters__: device adapters for micromanager
 
     * __ArdIllu__ (François Marelli): control a Kohler illuminator using an Arduino board
-    * __ArduControl__ (François Marelli): synchronization and modulation of light sources using an Arduino board
+    * __OpenLightControl__ (François Marelli): synchronization and modulation of light sources using an Arduino board
 
 * __libraries__: libraries for micromanager
 
@@ -26,7 +26,7 @@ This repository contains plugins, device adapters and libraries for the operatio
 * __plugins__: plugins for micromanager
 
     * __StageControl4D__ (François Marelli): control GUI for a 4D stage with off-axis rotation compensation and calibration
-    * __OpenLightControl__ (François Marelli): control GUI for the ArduControl modulation hardware
+    * __OpenLightControl__ (François Marelli): control GUI for the OpenLightControl modulation hardware
 
 * __print__: 3D printing files for the platform
 
