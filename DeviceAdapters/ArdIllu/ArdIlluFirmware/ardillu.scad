@@ -21,21 +21,22 @@
 $fn = 50;
 
 // stripboard
-w = 100;
-h = 80;
+w = 80;
+h = 50;
 
 // margins
-mh = 3;
-mw = 6;
+mh = 2;
+mw = 10;
+bm = 15;
 
 // corners
 c = 8;
-cd = 2.7;
+cd = 2.8;
 cdl = 3.1;
 
 // box
 W = w + 2 * (mw+ c);
-H = h + 2 * mh;
+H = h + 2 * mh + bm;
 
 T = 50;
 wall_thick = 2;
@@ -45,6 +46,7 @@ e = 2.5;
 tl = 2;
 t = T - tl;
 td = 20;
+fh = 5;
 
 thorlabs_feet = true;
 hf = 8;
@@ -94,9 +96,13 @@ module box(W, H){
        translate([0, 0, e+T/2]) cube([W, H, T], center=true);
     }
     
-  
+    
     feet(W, H, c, cd, t, td);
-    feetc(w/2-4.5, h/2-4.5, 7, cd, 10 +e, 10);
+    translate([0, bm/2, 0])   feetc(w/2-4.5, h/2-4.5, 7, cd, fh +e, fh);
+    
+    translate([-(w/2-4.5), (h/2-4.5)+bm/2, 0]) cylinder(d=cd, h=fh+3*e);
+    translate([-(w/2-4.5), -(h/2-4.5)+bm/2, 0]) cylinder(d=cd, h=fh+3*e);
+    translate([(w/2-4.5), -(h/2-4.5)+bm/2, 0]) cylinder(d=cd, h=fh+3*e);
     
     
      if (thorlabs_feet){
@@ -109,7 +115,7 @@ module box(W, H){
             translate([0, 0, -1]) cylinder(h=hf+2, d=6+tol);
         }
         
-        translate([0.3*W - 75, 0.5*H+6+wall_thick, 0]) 
+        translate([0.3*W - 50, 0.5*H+6+wall_thick, 0]) 
         difference(){
             union(){
                 cylinder(h=hf, d=12);
@@ -144,8 +150,7 @@ module box(W, H){
          }
      }
  }
-
-
+ 
  module bnc(){
  rotate(90, [1, 0, 0]) {
      difference(){
@@ -153,68 +158,82 @@ module box(W, H){
      translate([-9.8/2, -9.8/2, -2.5*wall_thick]) cube([9.8, 9.8-8.85, 5*wall_thick]);}
      }
  }
-
- usbz = e+10+1.6+9.5+2+1;
- portz = usbz+5;
  
  
- module ports(){
- translate([-w/2+4.5+2*2.54+7.6, H/2, usbz])
-    cube([15, 4*wall_thick, 10], center=true);
-
-
+ usbz = e+fh + 15;
+ portz = usbz+10;
+ 
+ module ports(){ 
+ translate([-w/2+4.5-2.54+7.6, H/2, usbz])
+    cube([12, 4*wall_thick, 10], center=true);
+ 
+ // POWER
+ translate([W/2-20, H/2, portz]){
+ rotate(90, [1, 0, 0]) cylinder(d=9.5, h=4*wall_thick, center=true);     
+translate([0, wall_thick/2, 10]) rotate(180, [0, 0, 1]) rotate(90, [1, 0, 0]) linear_extrude(height=wall_thick) text(valign="center", halign="center", size=6, "\u26a1", font="DejaVu Sans");
+ }
+ 
+ // Power Switch 
+translate([10, H/2, portz])
+rotate(180, [0, 0, 1]){
+    rotate(180, [0, 1, 0]) rotate(-90, [1, 0, 0]) {
+     difference(){     
+    cylinder(d=6.35, h=4*wall_thick, center=true);
+     translate([0, -(6.35-0.55)/2, 0]) cube([0.85, 0.55, 5*wall_thick], center=true);}     
+     translate([0,-6.1, 0]) cylinder(d=2.39, h=4*wall_thick, center=true);
+     translate([0,10, 0]) cylinder(d=3.05, h=4*wall_thick, center=true);
+     }
+ }
+ 
+ // LED
+ translate([w/2-10,- H/2, portz]){
+ rotate(90, [1, 0, 0]) cylinder(d=9.5, h=4*wall_thick, center=true); 
+  translate([0, 0, 10]) rotate(-90, [1, 0, 0]) cylinder(d=3.05, h=4*wall_thick, center=true);
+translate([-0.1, -wall_thick/2, 9.9]) rotate(90, [1, 0, 0]) linear_extrude(height=wall_thick) text(valign="center", halign="center", size=6.5, "\u2600", font="DejaVu Sans");
+ }
+ 
  // BNC
-translate([W/2, 20, portz]) rotate(90, [0, 0, 1]) {
+translate([W/2, -10, portz]) rotate(90, [0, 0, 1]) {
     bnc(); 
-    translate([0, -wall_thick/2, 10]) rotate(90, [1, 0, 0]) linear_extrude(height=wall_thick) text(valign="center", halign="center", size=4, "IN", font="DejaVu Sans");
+    translate([0, -wall_thick/2, 10]) rotate(90, [1, 0, 0]) linear_extrude(height=wall_thick) text(valign="center", halign="center", size=4, "1/0", font="DejaVu Sans");
 }
 
-// VGA
-translate([W/2, -12, portz])  rotate(90, [0,0,1]) rotate(90, [1, 0, 0]){
-cube( [19, 10, 4*wall_thick], center=true);   
-    translate([-12.5, 0, 0]) cylinder(d=3, h=4*wall_thick, center=true);
-    translate([12.5, 0, 0]) cylinder(d=3, h=4*wall_thick, center=true);
+translate([W/2, 10, portz]) rotate(90, [0, 0, 1]) {
+    bnc(); 
+    translate([0, -wall_thick/2, 10]) rotate(90, [1, 0, 0]) linear_extrude(height=wall_thick) text(valign="center", halign="center", size=6, "\u223f", font="DejaVu Sans");
 }
 
 
- // BNC
-translate([-23, -H/2, portz]) {    
-    translate([-10, 0, 0]) bnc(); 
-    translate([10, 0, 0])bnc(); 
-    translate([0, -wall_thick/2, 10]) rotate(90, [1, 0, 0]) linear_extrude(height=wall_thick) text(valign="center", halign="center", size=4, "OUT 2", font="DejaVu Sans");
-     translate([-10, -wall_thick/2, -10]) rotate(90, [1, 0, 0]) linear_extrude(height=wall_thick) text(valign="center", halign="center", size=4, "1/0", font="DejaVu Sans");
-     translate([10, -wall_thick/2, -10]) rotate(90, [1, 0, 0]) linear_extrude(height=wall_thick) text(valign="center", halign="center", size=6, "\u223f", font="DejaVu Sans");
+// Potentiometer
+translate([0, -H/2, portz])
+rotate(180, [0, 0, 1])
+rotate(90, [1, 0, 0]){
+translate([7.8, 0, 0]) cylinder(d=3, h=4*wall_thick, center=true);
+cylinder(d=8, h=4*wall_thick, center=true);    
 }
 
-translate([23, -H/2, portz]) {    
-    translate([-10, 0, 0]) bnc(); 
-    translate([10, 0, 0])bnc(); 
-    translate([0, -wall_thick/2, 10]) rotate(90, [1, 0, 0]) linear_extrude(height=wall_thick) text(valign="center", halign="center", size=4, "OUT P2", font="DejaVu Sans");
-     translate([-10, -wall_thick/2, -10]) rotate(90, [1, 0, 0]) linear_extrude(height=wall_thick) text(valign="center", halign="center", size=4, "1/0", font="DejaVu Sans");
-     translate([10, -wall_thick/2, -10]) rotate(90, [1, 0, 0]) linear_extrude(height=wall_thick) text(valign="center", halign="center", size=4, "PWM", font="DejaVu Sans");
-}
+// Button
+translate([-30, -H/2, portz])
+rotate(90, [1, 0, 0])
+cylinder(d=12.2, h=4*wall_thick, center=true);
 
-translate([-W/2, 0, portz]) rotate(-90, [0, 0, 1]){
-    translate([10, 0, 0]) bnc(); 
-    translate([-10, 0, 0])bnc(); 
-    translate([0, -wall_thick/2, 10]) rotate(90, [1, 0, 0]) linear_extrude(height=wall_thick) text(valign="center", halign="center", size=4, "OUT 1", font="DejaVu Sans");
-     translate([-10, -wall_thick/2, -10]) rotate(90, [1, 0, 0]) linear_extrude(height=wall_thick) text(valign="center", halign="center", size=4, "1/0", font="DejaVu Sans");
-     translate([10, -wall_thick/2, -10]) rotate(90, [1, 0, 0]) linear_extrude(height=wall_thick) text(valign="center", halign="center", size=6, "\u223f", font="DejaVu Sans");
-}
-
-translate([23, H/2, portz]) rotate(180, [0,0,1]) {
-    translate([10, 0, 0]) bnc(); 
-    translate([-10, 0, 0])bnc(); 
-    translate([0, -wall_thick/2, 10]) rotate(90, [1, 0, 0]) linear_extrude(height=wall_thick) text(valign="center", halign="center", size=4, "OUT P1", font="DejaVu Sans");
-     translate([-10, -wall_thick/2, -10]) rotate(90, [1, 0, 0]) linear_extrude(height=wall_thick) text(valign="center", halign="center", size=4, "1/0", font="DejaVu Sans");
-     translate([10, -wall_thick/2, -10]) rotate(90, [1, 0, 0]) linear_extrude(height=wall_thick) text(valign="center", halign="center", size=4, "PWM", font="DejaVu Sans");
-}
-
+// Switch
+translate([-W/2, 0, portz])
+rotate(-90, [0, 0, 1]){
+    rotate(-90, [0, 1, 0]) rotate(-90, [1, 0, 0]) {
+     difference(){     
+    cylinder(d=6.35, h=4*wall_thick, center=true);
+     translate([0, -(6.35-0.55)/2, 0]) cube([0.85, 0.55, 5*wall_thick], center=true);}     
+     translate([0,-6.1, 0]) cylinder(d=2.39, h=4*wall_thick, center=true);
+     }
+     translate([-7, -wall_thick/2, 0]) rotate(90, [1, 0, 0]) linear_extrude(height=wall_thick) text(valign="center", halign="right", size=4, "Soft.", font="DejaVu Sans");
+     translate([7, -wall_thick/2, 0]) rotate(90, [1, 0, 0]) linear_extrude(height=wall_thick) text(valign="center", halign="left", size=4, "Ext.", font="DejaVu Sans");
+ }
 }
 
 
 difference(){
-box(W, H);
+    box(W, H);
     ports();
 }
  
